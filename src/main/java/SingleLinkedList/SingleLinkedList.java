@@ -1,5 +1,7 @@
 package SingleLinkedList;
 
+import java.util.HashSet;
+
 public class SingleLinkedList {
     Node head;
     Node tail;
@@ -153,6 +155,123 @@ public class SingleLinkedList {
             next = next.next;
         }
         return this;
+    }
+
+    public Node findMiddle() {
+        Node slow = head;
+        Node fast = head;
+        while(fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        return slow;
+    }
+
+    public boolean hasLoop() {
+        Node slow = head;
+        Node fast = head;
+
+        while(fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) {
+                return true;
+            }
+        };
+        return false;
+    }
+
+    public Node findKthFromEnd(int k) {
+        Node slow = head;
+        Node fast = head;
+        for (int i = 0; i < k; i++) {
+            fast = fast.next;
+        }
+        while(fast != null) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+        return slow;
+    }
+
+    public Node partitionList(int pivot) {
+        Node lessThanList = new Node(0);
+        Node moreThanList = new Node(0);
+
+        Node lessThanHead = lessThanList;
+        Node moreThanHead = moreThanList;
+        Node curr = head;
+
+        while(curr != null) {
+            if (curr.value < pivot) {
+                lessThanList.next = curr;
+                lessThanList = lessThanList.next;
+            } else {
+                moreThanList.next = curr;
+                moreThanList = moreThanList.next;
+            }
+            curr = curr.next;
+
+            lessThanHead = lessThanHead.next;
+            moreThanHead = moreThanHead.next;
+            lessThanHead.next = moreThanHead;
+            moreThanHead.next = null;
+            head = lessThanHead;
+        }
+        return head;
+
+    }
+
+    // write remove duplicates method, but duplicates are not necessarily neighbors, they are not sorted;
+    public void removeDuplicates() {
+        HashSet<Integer> values = new HashSet<>();
+        Node current = head;
+        Node prev = null;
+        while (current != null) {
+            if (values.contains(current.value)) {
+                prev.next = current.next;
+                length -= 1;
+            } else {
+                values.add(current.value);
+                prev = current;
+            }
+            current = current.next;
+        }
+
+    }
+
+    public int binaryToDecimal() {
+        Node curr = head;
+        int i = length - 1;
+        int decimal = 0;
+        while (curr!= null) {
+            decimal += Math.pow(2, i) * curr.value;
+            curr = curr.next;
+            i--;
+        }
+        return decimal;
+    }
+
+    public void reverseBetween(int m, int n) {
+        if(this.head == null || m > n || m < 1 || n > this.length) return;
+        Node dummy = new Node(0);
+        dummy.next = this.head;
+        Node pre = dummy;
+
+        for(int i = 1; i < m; i++) {
+            pre = pre.next;
+        }
+
+        Node current = pre.next;
+
+        for(int i = m; i < n; i++) {
+            Node next = current.next;
+            current.next = next.next;
+            next.next = pre.next;
+            pre.next = next;
+        }
+
+        this.head = dummy.next;
     }
 
 

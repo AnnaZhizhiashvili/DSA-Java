@@ -8,6 +8,8 @@ public class Main {
         list.printList();
         list.push(2);
         list.printList();
+        System.out.println(list.findMiddle().value);
+
 
     }
 

@@ -1,10 +1,10 @@
 package SingleLinkedList;
 
 public class Node {
-    int value;
-    Node next;
-    public Node(int value) {
-        this.value = value;
-        this.next = null;
+    public int value;
+    public Node next;
+    public Node(int val) {
+        value = val;
+        next = null;
     }
 }
